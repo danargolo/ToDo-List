@@ -1,0 +1,1 @@
+const addTask = document.getElementById('texto-tarefa');
