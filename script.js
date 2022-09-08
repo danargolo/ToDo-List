@@ -13,6 +13,12 @@ clearBtn.id = 'apaga-tudo';
 clearBtn.innerText = 'Apagar';
 document.body.appendChild(clearBtn);
 
+const clearCompletedBtn = document.createElement('button');
+clearCompletedBtn.setAttribute('type', 'button');
+clearCompletedBtn.id = 'remover-finalizados';
+clearCompletedBtn.innerText = 'Finalizados';
+document.body.appendChild(clearCompletedBtn);
+
 const listItens = document.getElementsByTagName('li');
 
 function selector(a) {
@@ -63,3 +69,13 @@ function clear() {
 }
 
 clearBtn.addEventListener('click', clear);
+
+// Referencia: forEach: https://www.w3schools.com/jsref/jsref_foreach.asp
+function clearCompleted() {
+  const listComplet = document.querySelectorAll('.completed');
+  listComplet.forEach((element) => {
+    list.removeChild(element);
+  });
+}
+
+clearCompletedBtn.addEventListener('click', clearCompleted);
