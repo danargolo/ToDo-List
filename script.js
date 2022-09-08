@@ -1,10 +1,17 @@
 const addTask = document.getElementById('texto-tarefa');
 const list = document.getElementById('lista-tarefas');
 
-const button = document.createElement('button');
-button.setAttribute('type', 'button');
-button.id = 'criar-tarefa';
-document.body.appendChild(button);
+const btn = document.createElement('button');
+btn.setAttribute('type', 'button');
+btn.id = 'criar-tarefa';
+btn.innerText = 'Criar tarefa';
+document.body.appendChild(btn);
+
+const clearBtn = document.createElement('button');
+clearBtn.setAttribute('type', 'button');
+clearBtn.id = 'apaga-tudo';
+clearBtn.innerText = 'Apagar';
+document.body.appendChild(clearBtn);
 
 const listItens = document.getElementsByTagName('li');
 
@@ -15,7 +22,6 @@ function selector(a) {
   }
 }
 
-
 function insert() {
   const task = document.createElement('li');
   task.innerText = addTask.value;
@@ -23,20 +29,18 @@ function insert() {
   list.appendChild(task);
   tasker();
   checker();
-  // remComplete();
 }
 
-button.addEventListener('click', () => {
+btn.addEventListener('click', () => {
   insert();
   addTask.value = '';
 });
 
 function completedOrNot(r) {
-  if (r.target.classList.contains("completed")) {
+  if (r.target.classList.contains('completed')) {
     r.target.classList.remove('completed');
     r.target.classList.remove('selected');
-  } 
-  else {
+  } else {
     r.target.classList.add('completed');
     r.target.classList.remove('selected');
   }
@@ -53,3 +57,9 @@ function checker() {
     listItens[index].addEventListener('dblclick', completedOrNot);
   }
 }
+
+function clear() {
+  document.querySelector('ol').innerHTML = '';
+}
+
+clearBtn.addEventListener('click', clear);
