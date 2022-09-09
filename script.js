@@ -7,6 +7,8 @@ const clearBtn = document.getElementById('apaga-tudo');
 const clearCompletedBtn = document.getElementById('remover-finalizados');
 const saveBtn = document.getElementById('salvar-tarefas');
 const clearSelectedBtn = document.getElementById('remover-selecionado');
+const upBtn = document.getElementById('mover-cima');
+const dwBtn = document.getElementById('mover-baixo');
 
 const listItens = document.getElementsByTagName('li');
 
@@ -16,21 +18,6 @@ function selector(a) {
     a.target.classList.add('selected');
   }
 }
-
-function insert() {
-  const task = document.createElement('li');
-  task.innerText = addTask.value;
-  task.classList.add();
-  list.appendChild(task);
-  tasker();
-  checker();
-}
-
-btn.addEventListener('click', () => {
-  insert();
-  // saveTask.push({task: addTask.value});
-  addTask.value = '';
-});
 
 function completedOrNot(r) {
   if (r.target.classList.contains('completed')) {
@@ -52,6 +39,20 @@ function checker() {
     listItens[index].addEventListener('dblclick', completedOrNot);
   }
 }
+
+function insert() {
+  const task = document.createElement('li');
+  task.innerText = addTask.value;
+  list.appendChild(task);
+  tasker();
+  checker();
+}
+
+btn.addEventListener('click', () => {
+  insert();
+  // saveTask.push({task: addTask.value});
+  addTask.value = '';
+});
 
 function save() {
   const saveTask = [];
@@ -91,6 +92,8 @@ function load() {
       list.appendChild(task);
     }
   }
+  tasker();
+  checker();
 }
 window.addEventListener('load', load);
 
@@ -99,3 +102,26 @@ function clearSelected() {
   list.removeChild(select);
 }
 clearSelectedBtn.addEventListener('click', clearSelected);
+
+// Ref. https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
+function up() {
+  const select = document.querySelector('.selected');
+  const previous = select.previousElementSibling;
+  if (select === listItens[0]) {
+    return alert('Alteração não permitida');
+  }
+  select.parentNode.insertBefore(select, previous);
+}
+
+upBtn.addEventListener('click', (up));
+
+function down() {
+  const select = document.querySelector('.selected');
+  const next = select.nextElementSibling;
+  if (select === listItens[listItens.length - 1]) {
+    return alert('Alteração não permitida');
+  }
+  select.parentNode.insertBefore(next, select);
+}
+
+dwBtn.addEventListener('click', (down));
