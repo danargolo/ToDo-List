@@ -50,7 +50,6 @@ function insert() {
 
 btn.addEventListener('click', () => {
   insert();
-  // saveTask.push({task: addTask.value});
   addTask.value = '';
 });
 
@@ -106,22 +105,30 @@ clearSelectedBtn.addEventListener('click', clearSelected);
 // Ref. https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
 function up() {
   const select = document.querySelector('.selected');
-  const previous = select.previousElementSibling;
-  if (select === listItens[0]) {
-    return alert('Alteração não permitida');
+  for (let index = 0; index < listItens.length; index += 1) {
+    if (select === listItens[0]) {
+      return;
+    }
+    if (select === listItens[index]) {
+      const previous = listItens[index].previousElementSibling;
+      select.parentNode.insertBefore(select, previous);
+    }
   }
-  select.parentNode.insertBefore(select, previous);
 }
 
 upBtn.addEventListener('click', (up));
 
 function down() {
   const select = document.querySelector('.selected');
-  const next = select.nextElementSibling;
-  if (select === listItens[listItens.length - 1]) {
-    return alert('Alteração não permitida');
+  for (let index = listItens.length; index >= 0; index -= 1) {
+    if (select === listItens[listItens.length - 1]) {
+      return;
+    }
+    if (select === listItens[index]) {
+      const next = listItens[index].nextElementSibling;
+      select.parentNode.insertBefore(next, select);
+    }
   }
-  select.parentNode.insertBefore(next, select);
 }
 
 dwBtn.addEventListener('click', (down));
